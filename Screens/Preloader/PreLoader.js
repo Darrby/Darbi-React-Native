@@ -1,13 +1,6 @@
-import {
-  Animated,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import logo from '../../assets/logo.png';
 import { useEffect, useRef } from 'react';
-import { useRoute } from '@react-navigation/native';
 
 export default function PreLoader({ navigation }) {
   const fadeAnim = useRef(new Animated.Value(3)).current; // Initial value for opacity: 0

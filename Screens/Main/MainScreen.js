@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import logo from '../../assets/logo.png';
 import pagination from '../../assets/pagination.png';
+import BottomTabs from '../../components/BottomTabs/BottomTabs';
 
 export default function Main({ navigation }) {
   return (
@@ -49,6 +50,7 @@ export default function Main({ navigation }) {
           <Text style={styles.btnText}>ابدأ الآن</Text>
         </Pressable>
       </View>
+      <BottomTabs />
     </View>
   );
 }

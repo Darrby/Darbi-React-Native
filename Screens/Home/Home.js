@@ -1,9 +1,8 @@
 import {
   SafeAreaView,
   StyleSheet,
-  View,
   Text,
-  Alert,
+  View,
 } from 'react-native';
 import MapView, {
   Marker,
@@ -12,49 +11,22 @@ import MapView, {
 import * as Location from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
 import {
-  BottomNavigation,
+  Avatar,
   IconButton,
   Searchbar,
 } from 'react-native-paper';
+import avatar from '../../assets/driveravatar.jpeg';
+import CircularProgress from '../../components/CircullarProgress/CircularProgress';
+import BottomTabs from '../../components/BottomTabs/BottomTabs';
+import Swiper from 'react-native-swiper';
+import { AirbnbRating, Rating } from 'react-native-ratings';
 
-const MusicRoute = () => <Text></Text>;
-
-const AlbumsRoute = () => <Text></Text>;
-
-const RecentsRoute = () => <Text></Text>;
-
-const NotificationsRoute = () => <Text></Text>;
-
-export default function Home() {
+export default function Home({ navigation }) {
   const mapRef = useRef();
-  const [position, setPosition] = useState({});
+  const [position, setPosition] = useState(null);
   const [query, setQuery] = useState('');
-  const [index, setIndex] = useState(3);
-  const [routes] = useState([
-    {
-      key: 'more',
-      title: 'الـمـزيـد',
-      focusedIcon: require('../../assets/more.png'),
-      unfocusedIcon: require('../../assets/more.png'),
-    },
-    {
-      key: 'wallet',
-      title: 'المحفظة',
-      focusedIcon: require('../../assets/wallet.png'),
-    },
-    {
-      key: 'albums',
-      title: 'رحلاتي',
-      focusedIcon: require('../../assets/trips.png'),
-    },
-    {
-      key: 'music',
-      title: 'الرئيسية',
-      focusedIcon: require('../../assets/home.png'),
-      focusedIcon: require('../../assets/home.png'),
-    },
-  ]);
 
+  // Get Geolocation of the user and show it on the map
   useEffect(() => {
     const getLocation = async () => {
       let { status } =
@@ -76,12 +48,7 @@ export default function Home() {
     };
     getLocation();
   }, []);
-  const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    wallet: RecentsRoute,
-    more: NotificationsRoute,
-  });
+
   return (
     <View style={styles.container} location={position}>
       <MapView
@@ -91,10 +58,79 @@ export default function Home() {
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
       >
-        {/* <Marker
-          coordinate={position}
-          tracksViewChanges={true}
-        /> */}
+        {position && (
+          <Marker
+            coordinate={{
+              longitude: position.longitude + 0.01,
+              latitude: position.latitude + 0.01,
+            }}
+            tracksViewChanges={true}
+          >
+            <View
+              style={{
+                position: 'relative',
+              }}
+            >
+              <CircularProgress percent={100} />
+              <Avatar.Image size={65} source={avatar} />
+            </View>
+          </Marker>
+        )}
+        {position && (
+          <Marker
+            coordinate={{
+              longitude: position.longitude + -0.01,
+              latitude: position.latitude + 0.01,
+            }}
+            tracksViewChanges={true}
+          >
+            <View
+              style={{
+                position: 'relative',
+              }}
+            >
+              <CircularProgress percent={60} />
+              <Avatar.Image size={65} source={avatar} />
+            </View>
+          </Marker>
+        )}
+
+        {position && (
+          <Marker
+            coordinate={{
+              longitude: position.longitude,
+              latitude: position.latitude + 0.02,
+            }}
+            tracksViewChanges={true}
+          >
+            <View
+              style={{
+                position: 'relative',
+              }}
+            >
+              <CircularProgress percent={90} />
+              <Avatar.Image size={65} source={avatar} />
+            </View>
+          </Marker>
+        )}
+        {position && (
+          <Marker
+            coordinate={{
+              longitude: position.longitude + 0.01,
+              latitude: position.latitude,
+            }}
+            tracksViewChanges={true}
+          >
+            <View
+              style={{
+                position: 'relative',
+              }}
+            >
+              <CircularProgress percent={80} />
+              <Avatar.Image size={65} source={avatar} />
+            </View>
+          </Marker>
+        )}
       </MapView>
       <SafeAreaView style={styles.absoluteCont}>
         <IconButton
@@ -126,19 +162,93 @@ export default function Home() {
           onPress={() => console.log('Pressed')}
         />
       </SafeAreaView>
-      <BottomNavigation
-        theme={{
-          colors: { secondaryContainer: 'transparent' },
-        }}
-        activeColor="#343434"
-        inactiveColor="#ACACAC"
-        sceneAnimationEnabled={false}
-        barStyle={{ backgroundColor: '#ffff' }}
-        style={styles.bottomNav}
-        navigationState={{ index, routes }}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-      />
+      <View style={styles.swiperContainer}>
+        <Swiper
+          style={styles.wrapper}
+          showsButtons={false}
+          showsPagination={false}
+        >
+          <View style={styles.slide}>
+            <Avatar.Image size={65} source={avatar} />
+            <View style={styles.text}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <AirbnbRating
+                  count={4}
+                  size={12}
+                  isDisabled={true}
+                  showRating={false}
+                />
+                <Text style={styles.name}>
+                  محمد عبدالله{' '}
+                </Text>
+              </View>
+
+              <Text style={styles.desc}>
+                التوصيل من (السلمانية) الي (جدة)
+              </Text>
+            </View>
+          </View>
+          <View style={styles.slide}>
+            <Avatar.Image size={65} source={avatar} />
+            <View style={styles.text}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <AirbnbRating
+                  count={4}
+                  size={12}
+                  isDisabled={true}
+                  showRating={false}
+                />
+                <Text style={styles.name}>
+                  محمد عبدالله{' '}
+                </Text>
+              </View>
+
+              <Text style={styles.desc}>
+                التوصيل من (السلمانية) الي (جدة)
+              </Text>
+            </View>
+          </View>
+          <View style={styles.slide}>
+            <Avatar.Image size={65} source={avatar} />
+            <View style={styles.text}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <AirbnbRating
+                  count={4}
+                  size={12}
+                  isDisabled={true}
+                  showRating={false}
+                />
+                <Text style={styles.name}>
+                  محمد عبدالله{' '}
+                </Text>
+              </View>
+
+              <Text style={styles.desc}>
+                التوصيل من (السلمانية) الي (جدة)
+              </Text>
+            </View>
+          </View>
+        </Swiper>
+      </View>
+      <BottomTabs navigation={navigation} />
     </View>
   );
 }
@@ -179,5 +289,41 @@ const styles = StyleSheet.create({
     height: 90,
     right: 0,
     left: 0,
+  },
+  wrapper: {},
+  slide: {
+    width: '82%',
+    padding: 14,
+    alignSelf: 'center',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    backgroundColor: '#ffff',
+    borderRadius: 16,
+    gap: 12,
+  },
+  text: {
+    flex: 1,
+    display: 'flex',
+    gap: 2,
+  },
+  name: {
+    textAlign: 'right',
+    fontWeight: '800',
+    fontSize: 16,
+    color: 'black',
+  },
+  desc: {
+    textAlign: 'right',
+    color: '#828282',
+    fontSize: 12,
+  },
+  swiperContainer: {
+    display: 'flex',
+    position: 'absolute',
+    bottom: 110,
+    height: 100,
+    width: '100%',
   },
 });
