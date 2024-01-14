@@ -33,9 +33,9 @@ export default function ScreenOTP({ navigation }) {
     };
     hashPhoneNumber();
   }, [phoneNumber]);
-
+  const { goBack } = navigation;
   const handleBack = () => {
-    navigation.navigate('signin');
+    navigation.goBack('ScreenOTP');
   };
 
   const handleAuth = (code) => {
@@ -49,42 +49,32 @@ export default function ScreenOTP({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={
-        Platform.OS === 'ios' ? 'padding' : 'height'
-      }
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <SafeAreaView style={styles.absolute}>
         <Pressable
           style={({ pressed }) => [
             {
-              backgroundColor: pressed
-                ? '#828282'
-                : 'transparent',
+              backgroundColor: pressed ? '#828282' : 'transparent',
             },
             styles.proceedBttn,
           ]}
           onPress={handleBack}
         >
-          <Icon
-            name="arrowright"
-            size={20}
-            color="#171725"
-          />
+          <Icon name="arrowright" size={20} color="#171725" />
         </Pressable>
       </SafeAreaView>
       {!isFetching ? (
         <View style={styles.mainCont}>
           <View style={styles.textWrapper}>
-            <Text style={styles.title}>
+            {/* <Text style={styles.title}>
               ادخال رمز الOTP
-            </Text>
+            </Text> */}
             <Text style={styles.helperTxt}>
               أدخل الرمز الذي أرسلناه إلى رقمك
             </Text>
-            <Text style={styles.phoneText}>
-              +20{hashedNumber}
-            </Text>
+            <Text style={styles.phoneText}>+20{hashedNumber}</Text>
           </View>
           <OTPInputView
             style={{
@@ -94,9 +84,7 @@ export default function ScreenOTP({ navigation }) {
             pinCount={4}
             autoFocusOnLoad
             codeInputFieldStyle={styles.underlineStyleBase}
-            codeInputHighlightStyle={
-              styles.underlineStyleHighLighted
-            }
+            codeInputHighlightStyle={styles.underlineStyleHighLighted}
             onCodeFilled={(code) => {
               handleAuth(code);
             }}
@@ -105,20 +93,13 @@ export default function ScreenOTP({ navigation }) {
           />
           <View style={styles.resendCont}>
             <Pressable>
-              <Text style={styles.resendLink}>
-                ارسال مرة اخري
-              </Text>
+              <Text style={styles.resendLink}>ارسال مرة اخري</Text>
             </Pressable>
-            <Text style={styles.questionTxt}>
-              لم يتم ارسال الكود؟
-            </Text>
+            <Text style={styles.questionTxt}>لم يتم ارسال الكود؟</Text>
           </View>
         </View>
       ) : (
-        <ActivityIndicator
-          animating={true}
-          color={'green'}
-        />
+        <ActivityIndicator animating={true} color={'green'} />
       )}
     </KeyboardAvoidingView>
   );

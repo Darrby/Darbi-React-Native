@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 export default function PreLoader({ navigation }) {
   const fadeAnim = useRef(new Animated.Value(3)).current; // Initial value for opacity: 0
   const opacityAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -27,9 +28,7 @@ export default function PreLoader({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{ display: 'flex', width: 83, height: 105 }}
-      >
+      <View style={{ display: 'flex', width: 83, height: 105 }}>
         <Animated.Image
           source={logo}
           style={{
@@ -39,9 +38,7 @@ export default function PreLoader({ navigation }) {
           }}
         />
       </View>
-      <Animated.Text
-        style={[styles.brandName, { opacity: opacityAnim }]}
-      >
+      <Animated.Text style={[styles.brandName, { opacity: opacityAnim }]}>
         دربي
       </Animated.Text>
       <Animated.Text style={{ opacity: opacityAnim }}>

@@ -7,8 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import loginLogo from '../../assets/logoauth.png';
-import { TextInput } from 'react-native-paper';
-import { Pressable } from 'react-native';
+import { Pressable, TextInput } from 'react-native';
 import { useEffect, useState } from 'react';
 
 export default function SignIn({ navigation }) {
@@ -31,18 +30,23 @@ export default function SignIn({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={
-        Platform.OS === 'ios' ? 'padding' : 'height'
-      }
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <Image source={loginLogo} style={styles.logoImg} />
       <View style={styles.formContainer}>
         <View style={styles.titleCont}>
           <Text style={styles.title}>تسجيل دخول</Text>
-          <Text style={styles.slog}>عضوية جديدة</Text>
+          {/* <Text style={styles.slog}>عضوية جديدة</Text> */}
         </View>
         <TextInput
+          style={styles.input}
+          placeholder="رقم الموبيل"
+          keyboardType="phone-pad"
+          onChangeText={(text) => setPhoneNumber(text)}
+        />
+
+        {/* <TextInput
           label="رقم الموبيل"
           style={styles.input}
           theme={{
@@ -54,7 +58,7 @@ export default function SignIn({ navigation }) {
           mode="flat"
           keyboardType="phone-pad"
           onChangeText={(text) => setPhoneNumber(text)}
-        />
+        /> */}
         <Pressable
           //   onPress={() => navigation.navigate('home')}
           style={({ pressed }) => [
@@ -93,7 +97,8 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: '#ffff',
     width: '100%',
-    borderRadius: 65,
+    borderTopRightRadius: 65,
+    borderTopLeftRadius: 65,
     paddingTop: 39,
     paddingBottom: 39,
     paddingRight: 29,
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
     color: '#282A3E',
     textAlign: 'right',
     flexDirection: 'row-reverse',
-    padding: 0,
+    paddingBottom: 10,
     backgroundColor: 'transparent',
     borderBottomWidth: 1,
     borderColor: '#EAEAEA',

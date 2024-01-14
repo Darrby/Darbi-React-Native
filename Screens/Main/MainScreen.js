@@ -1,20 +1,28 @@
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import logo from '../../assets/logo.png';
 import pagination from '../../assets/pagination.png';
-import BottomTabs from '../../components/BottomTabs/BottomTabs';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from 'react';
+SplashScreen.preventAutoHideAsync();
 
 export default function Main({ navigation }) {
+  const [fontsLoaded] = useFonts({
+    'Avenir Arabic': require('../../assets/fonts/AvenirArabic-Heavy.otf'),
+    'Avenir Arabic Light': require('../../assets/fonts/AvenirArabic-Medium.otf'),
+  });
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <View
-        style={{ display: 'flex', width: 73, height: 90 }}
-      >
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      <View style={{ display: 'flex', width: 73, height: 90 }}>
         <Image
           source={logo}
           style={{
@@ -26,23 +34,17 @@ export default function Main({ navigation }) {
       <View style={styles.box}>
         <Image source={pagination} />
         <View style={styles.titleWrapper}>
-          <Text style={styles.titleText}>
-            اهلا بك فى دربي
-          </Text>
-          <Text style={styles.paragraph}>
-            تصفح واطلع علي جميع الرحلات
-          </Text>
+          <Text style={styles.titleText}>اهلا بك فى دربي</Text>
+          <Text style={styles.paragraph}>تصفح واطلع على جميع الرحلات</Text>
         </View>
         <Text style={styles.smallTxt}>
-          تصفح كل ماهو جديد وابقي علي متابعة دائمة معنا
+          تصفح كل ماهو جديد وابقي على متابعة دائمة معنا
         </Text>
         <Pressable
-          onPress={() => navigation.navigate('signin')}
+          onPress={() => navigation.navigate('home')}
           style={({ pressed }) => [
             {
-              backgroundColor: pressed
-                ? '#828282'
-                : '#585858',
+              backgroundColor: pressed ? '#828282' : '#585858',
             },
             styles.mainBttn,
           ]}
@@ -78,20 +80,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
+    fontFamily: 'Avenir Arabic',
     color: '#5E5E5E',
-    fontWeight: '900',
     fontSize: 24,
   },
   paragraph: {
+    fontFamily: 'Avenir Arabic',
     paddingTop: 10,
     color: '#000000',
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
   },
   smallTxt: {
+    fontFamily: 'Avenir Arabic Light',
     color: '#636366',
-    fontSize: 13,
-    fontWeight: '400',
+    fontSize: 14,
   },
   mainBttn: {
     borderRadius: 90,
