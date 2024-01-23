@@ -20,7 +20,8 @@
       "jsEngine": "jsc",
       "runtimeVersion": {
         "policy": "appVersion"
-      }
+      },
+      "bundleIdentifier": "com.mmahany.Darby"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",

@@ -1,28 +1,12 @@
+import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import logo from '../../assets/logo.png';
 import pagination from '../../assets/pagination.png';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useCallback } from 'react';
-SplashScreen.preventAutoHideAsync();
 
 export default function Main({ navigation }) {
-  const [fontsLoaded] = useFonts({
-    'Avenir Arabic': require('../../assets/fonts/AvenirArabic-Heavy.otf'),
-    'Avenir Arabic Light': require('../../assets/fonts/AvenirArabic-Medium.otf'),
-  });
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <View style={{ display: 'flex', width: 73, height: 90 }}>
+    <View style={styles.container}>
+      <View style={{ display: 'flex', width: 73, height: 92 }}>
         <Image
           source={logo}
           style={{

@@ -1,7 +1,7 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BottomTabs from '../../components/BottomTabs/BottomTabs';
 import Swiper from 'react-native-swiper';
 import SwipperSlide from '../../components/SwipperSlide/swipperSlide';
@@ -97,13 +97,7 @@ export default function Home({ navigation }) {
           {active && (
             <IconButton
               icon={require('../../assets/close.png')}
-              style={{
-                position: 'absolute',
-                top: -50,
-                right: 22,
-                borderRadius: 50,
-                backgroundColor: '#ffff',
-              }}
+              style={styles.closeBttn}
               size={20}
               color="#11171966"
               onPress={() => setActive(false)}
@@ -133,7 +127,7 @@ export default function Home({ navigation }) {
         setIsSigninSheetOpen={setIsSigninSheetOpen}
         navigation={navigation}
       />
-      <BottomTabs navigation={navigation} />
+      <BottomTabs />
     </View>
   );
 }
@@ -153,5 +147,12 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     zIndex: 0,
+  },
+  closeBttn: {
+    position: 'absolute',
+    top: -50,
+    right: 22,
+    borderRadius: 50,
+    backgroundColor: '#ffff',
   },
 });

@@ -4,10 +4,12 @@ import trips from '../../assets/trips.png';
 import wallet from '../../assets/wallet.png';
 import more from '../../assets/more.png';
 import { Image } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useLinkTo } from '@react-navigation/native';
 
-export default function BottomTabs({ navigation }) {
+export default function BottomTabs() {
+  const linkTo = useLinkTo();
   const route = useRoute();
+
   return (
     <View style={styles.bottomBar}>
       <Pressable
@@ -56,7 +58,7 @@ export default function BottomTabs({ navigation }) {
           },
           styles.tab,
         ]}
-        onPress={() => navigation.navigate('home')}
+        onPress={() => linkTo('/home')}
       >
         <Image source={homeIcon} />
         <Text style={route.name === 'home' ? styles.active : styles.tabName}>

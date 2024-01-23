@@ -6,7 +6,6 @@ import car from '../../assets/car.jpeg';
 export default function SwipperSlide({
   driver,
   setActive,
-  navigation,
   active,
   setIsSigninSheetOpen,
 }) {
